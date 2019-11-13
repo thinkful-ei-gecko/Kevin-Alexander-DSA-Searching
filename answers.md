@@ -61,3 +61,15 @@ function findBook(library, dewey, title, start=0, end=library.length - 1) {
   }
 }
 ```
+
+## 4. Searching in a BST
+
+  ```
+         35
+       /    \
+     25      89
+    /  \    /   \
+   15  27  79   91
+  /  \         /
+ 14  19       90
+ ```

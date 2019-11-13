@@ -9,10 +9,32 @@
 class BinarySearchTree {
   constructor(key = null, value = null, parent = null) {
     this.value = value,
-      this.key = key,
-      this.parent = parent,
-      this.left = null,
-      this.right = null;
+    this.key = key,
+    this.parent = parent,
+    this.left = null,
+    this.right = null;
+  }
+
+  display() {
+    if (this.key === null) {
+      return;
+    }
+
+    console.log({
+      // key: this.key,
+      value: this.value,
+      parent: this.parent ? this.parent.value : null,
+      left: this.left ? this.left.value : null,
+      right: this.right ? this.right.value : null
+    });
+
+    if (this.left !== null) {
+      this.left.display();
+    }
+
+    if (this.right !== null) {
+      this.right.display();
+    }
   }
 
   insert(key, value) {
@@ -20,7 +42,7 @@ class BinarySearchTree {
       this.key = key;
       this.value = value;
     }
-    else if (this.key >= key) {
+    else if (this.key > key) {
       if (this.left == null) {
         this.left = new BinarySearchTree(key, value, this);
       } else {
@@ -147,7 +169,6 @@ class BinarySearchTree {
     }
     console.log(this.key);
   }
-
 }
 
 module.exports = BinarySearchTree;

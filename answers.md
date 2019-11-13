@@ -64,12 +64,82 @@ function findBook(library, dewey, title, start=0, end=library.length - 1) {
 
 ## 4. Searching in a BST
 
-  ```
-         35
-       /    \
-     25      89
-    /  \    /   \
-   15  27  79   91
-  /  \         /
- 14  19       90
- ```
+```
+           35
+        /      \
+       25      89
+      /  \    /  \
+    15   27  79   91
+   /  \          /
+  14  19        90
+```
+**In-Order:** 14, 15, 19, 25, 27, 35, 79, 89, 90, 91
+**Pre-Order:** 35, 25, 15, 14, 19, 27, 89, 79, 91, 90
+**Post-Order:** 14, 19, 15, 27, 25, 79, 90, 91, 89, 35
+
+## 5. Implement different tree traversals
+```javascript
+  inOrder() {
+    if (this.left) {
+      this.left.inOrder();
+    }
+    console.log(this.key);
+    if (this.right) {
+      this.right.inOrder();
+    }
+  }
+  preOrder() {
+    console.log(this.key);
+    if (this.left) {
+      this.left.preOrder();
+    }
+    if (this.right) {
+      this.right.preOrder();
+    }
+  }
+  postOrder() {
+    if (this.left) {
+      this.left.postOrder();
+    }
+    if (this.right) {
+      this.right.postOrder();
+    }
+    console.log(this.key);
+  }
+```
+
+## 6. Find the next commanding officer
+```javascript
+function outputByRank(tree, rankOrder=[]) {
+  const queue = new Queue();
+  const person = tree; // tree is the first node
+  queue.enqueue(person);
+  while (queue.length) {
+    const person = queue.dequeue();
+    rankOrder.push(person.value);
+    // console.log(person.value)
+    if (person.left) {
+      queue.enqueue(person.left);
+    }
+
+    if (person.right) {
+      queue.enqueue(person.right);
+    }
+  }
+
+  return rankOrder;
+}
+```
+
+## 7 Max Profit
+```
+       128
+        /
+       97
+         \
+         121
+         /  \
+        98  123
+       /  \
+      97  105
+```

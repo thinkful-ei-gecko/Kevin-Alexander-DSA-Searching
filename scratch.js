@@ -1,5 +1,9 @@
-const BinarySearchTree = require('./BST')
+const BinarySearchTree = require('./BST');
+const Queue = require('./Queue');
 
+/*************************************************
+ Q3
+ **************************************************/
 const library = [
   "005.133 Mike Cowlishaw: The REXX Language",
   "005.133 Sams: Teach Yourself C++ In 21 Days",
@@ -12,8 +16,7 @@ const library = [
   "623.82509051 Frederick Thomas Jane: Jane's Fighting Ships",
   "796.8092 Chuck Norris: The Official Chuck Norris Fact Book",
 ];
-
-function findBook(library, dewey, title, start = 0, end = library.length - 1) {
+function findBook(library, dewey, title, start = 0, end = library.length) {
   let targets = dewey.split('.'); // 123.45678 -> [123, 45678]
 
   if (start > end) {
@@ -57,37 +60,74 @@ function findBook(library, dewey, title, start = 0, end = library.length - 1) {
     }
   }
 }
+// console.log(findBook(library, '005.44684', `Meinhard Schmidt: Windows Vista for Dummies`));
 
-// console.log(findBook(library, '005.2762', `Douglas Crockford: JavaScript: The Good Parts`));
+/*************************************************
+ Q5
+ **************************************************/
+const traversal = new BinarySearchTree();
+const dataset = [25, 15, 50, 10, 24, 35, 70, 4, 12, 18, 31, 44, 66, 90, 22];
+dataset.forEach(item => traversal.insert(item));
+// console.log('inorder:');
+// traversal.inOrder();
+// console.log('preorder:');
+// traversal.preOrder();
+// console.log('postorder:');
+// traversal.postOrder();
 
-const test = new BinarySearchTree();
+/*************************************************
+ Q6
+ **************************************************/
+function outputByRank(tree, rankOrder=[]) {
+  const queue = new Queue();
+  const person = tree; // tree is the first node
+  queue.enqueue(person);
+  while (queue.length) {
+    const person = queue.dequeue();
+    rankOrder.push(person.value);
+    // console.log(person.value)
+    if (person.left) {
+      queue.enqueue(person.left);
+    }
 
-const arr1 = [
-  14, 15, 19, 25, 27, 35, 79, 89, 90, 91
-]
+    if (person.right) {
+      queue.enqueue(person.right);
+    }
+  }
 
-const arr2 = [
-  35, 25, 15, 14, 19, 27, 89, 79, 91, 90
-]
+  return rankOrder;
+}
 
-arr2.forEach(item => test.insert(item));
+const USSEnterprise = new BinarySearchTree();
+USSEnterprise.insert(100, 'Captain Picard');
+USSEnterprise.insert(90, 'Commander Riker');
+USSEnterprise.insert(110, 'Commander Data');
+USSEnterprise.insert(80, 'Lt. Cmdr. Worf');
+USSEnterprise.insert(70, 'Lieutenant RedShirt');
+USSEnterprise.insert(95, 'Lt. Cmdr. LaForge');
+USSEnterprise.insert(120, 'Lt. Cmdr. Crusher');
+USSEnterprise.insert(115, 'Lieutenant Selar');
+// USSEnterprise.display();
+// console.log(outputByRank(USSEnterprise, []));
 
-console.log('inorder:');
-test.inOrder();
-console.log('preorder:');
-test.preOrder();
-console.log('postorder:');
-test.postOrder();
+/*************************************************
+ Q7
+ **************************************************/
+function getMaxProfit(prices) {
+  let minPrice = prices[0];
+  let maxProfit = 0;
 
-// const testData = [
-//   { key: 14, parent: null, left: null, right: 15 }
-// { key: 15, parent: 14, left: null, right: 19 }
-// { key: 19, parent: 15, left: null, right: 25 }
-// { key: 25, parent: 19, left: null, right: 27 }
-// { key: 27, parent: 25, left: null, right: 35 }
-// { key: 35, parent: 27, left: null, right: 79 }
-// { key: 79, parent: 35, left: null, right: 89 }
-// { key: 89, parent: 79, left: null, right: 90 }
-// { key: 90, parent: 89, left: null, right: 91 }
-// { key: 91, parent: 90, left: null, right: null }
-// ];
+  for (let i = 0; i < prices.length; i++) {
+    if(prices[i] < minPrice) {
+      minPrice = prices[i];
+    }
+
+    let profit = prices[i] - minPrice;
+    if(profit > maxProfit) {
+      maxProfit = profit;
+    }
+  }
+
+  return maxProfit;
+}
+console.log(getMaxProfit([128, 97, 121, 123, 98, 97, 105]));
